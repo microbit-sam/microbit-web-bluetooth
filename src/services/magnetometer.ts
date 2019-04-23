@@ -110,6 +110,12 @@ export class MagnetometerService extends (EventDispatcher as new() => TypedDispa
         return await char.readValue();
     }
 
+    public async calibrate(): Promise<void> {
+        const characteristic = await this.service.getCharacteristic(MagnetometerCharacteristic.magnetometerCalibration);
+        const calibrate = 0x01;
+        return characteristic.writeValue(calibrate);
+    }
+
     private async onNewListener(event: keyof MagnetometerEvents): Promise<void> {
         const listenerCount = this.listenerCount(event);
 
